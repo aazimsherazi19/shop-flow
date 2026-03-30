@@ -38,7 +38,7 @@ const FeaturedProducts = () => {
       title: "Cheese Board",
       price: "Rs.4,600.00",
       oldPrice: "Rs.5,100.00",
-      image: assets.p5,
+      image: assets.p1,
     },
     {
       id: 6,

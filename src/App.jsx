@@ -8,6 +8,9 @@ import { assets } from './assets/assets'
 import FeaturedProducts from './sections/FeaturedProducts'
 import PromoBanner from './sections/PromoBanner'
 import Features2 from './sections/Features2'
+import ProductCard from './components/product/ProductCard'
+import ProductPromo from './sections/ProductPromo'
+import OfferBanners from './sections/OfferBanners'
 
 const App = () => {
   return (
@@ -54,7 +57,10 @@ const App = () => {
   { icon: assets.f3, heading: "Smart Functionality", text: "Created with the modern home in mind, our designs feature smart." },
   { icon: assets.f4, heading: "Trusted by Many", text: "Loved by thousands of happy customers and design-conscious homeowners." },
 ]}/>
+<ProductPromo/>
+<OfferBanners/>
     </div>
+
   )
 }
 

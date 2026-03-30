@@ -6,7 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 const PromoBanner = () => {
   return (
     <section
-      className="relative w-full min-h-[80svh] md:min-h-[90svh] flex items-center justify-center bg-cover bg-center"
+      className="relative w-full min-h-[700px] md:min-h-[800px] lg:min-h-[900px] flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url(${assets.promo})` }} // dummy replace later
     >
       {/* Overlay */}
@@ -57,31 +57,41 @@ const PromoBanner = () => {
       </div>
 
       {/* FLOATING PRODUCT CARD */}
-      <div className="hidden md:block absolute bottom-5 left-30 backdrop-blur-sm rounded-xl shadow-xl p-3 w-[220px] animate-float">
+      <div className=" hidden md:block absolute bottom-6 left-4 md:bottom-10 md:left-10 lg:bottom-16 lg:left-20 xl:left-32 backdrop-blur-md rounded-xl shadow-xl p-3 w-[220px] animate-float">
         <img
           src={assets.promocard}
           alt=""
           className="w-full h-[120px] object-contain"
         />
-        <h4 className="text-sm mt-2 font-medium">Minimalist Sofa</h4>
-        <p className="text-xs text-gray-400">$49.99</p>
+        <h4 className="text-lg mt-2 font-light text-white ">Minimalist Sofa</h4>
+        {/* <p className="text-xs text-gray-400">$49.99</p> */}
+        <div className="flex items-center gap-2 mt-2 text-sm">
+      <span className="text-white font-light text-lg">
+        $79.99
+      </span>
 
-        <button className="mt-2 text-xs bg-orange-500 text-white px-3 py-1 rounded-full">
+        <span className="text-[#f5f5f5] line-through">
+          $49.99
+        </span>
+      
+    </div>
+
+        <button className="mt-4 text-xs bg-white text-primary px-4 py-2 rounded-full">
           Explore Detail →
         </button>
       </div>
 
       {/* FLOATING ICONS */}
-      <div className="absolute top-[30%] left-[20%] w-8 h-8 bg-white rounded-full flex items-center justify-center shadow animate-float">
-        <FontAwesomeIcon icon={faPlus} className="text-orange-500" />
+      <div className="absolute top-[30%] left-[20%] w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow animate-float">
+        <FontAwesomeIcon icon={faPlus} className="text-white" />
       </div>
 
-      <div className="absolute top-[50%] right-[15%] w-8 h-8 bg-white rounded-full flex items-center justify-center shadow animate-float">
-        <FontAwesomeIcon icon={faPlus} className="text-orange-500" />
+      <div className="absolute top-[50%] right-[15%] w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow animate-float">
+        <FontAwesomeIcon icon={faPlus} className="text-white" />
       </div>
 
-      <div className="absolute bottom-[20%] right-[25%] w-8 h-8 bg-white rounded-full flex items-center justify-center shadow animate-float">
-        <FontAwesomeIcon icon={faPlus} className="text-orange-500" />
+      <div className="absolute bottom-[20%] right-[25%] w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow animate-float">
+        <FontAwesomeIcon icon={faPlus} className="text-white" />
       </div>
     </section>
   );
