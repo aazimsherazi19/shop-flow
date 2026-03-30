@@ -49,8 +49,8 @@ const Hero = () => {
         
         {/* LEFT TEXT */}
         <div>
-          <h1 className="text-3xl md:text-6xl font-semibold leading-snug">
-            Redefine Your Space <br />with Timeless Furniture
+          <h1 className="text-3xl md:text-5xl font-semibold leading-snug">
+            Redefine Your Space with Timeless Furniture
           </h1>
 
           <p className="mt-4 max-w-lg text-gray-200 font-light">
