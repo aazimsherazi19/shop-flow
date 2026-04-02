@@ -22,3 +22,19 @@ body {
   -webkit-text-stroke: 1px rgba(255,255,255,0.3);
   color: transparent;
 }
+.button {
+  background-color: #F28C38; /* assuming your --color-primary */
+  color: #ffffff;
+  padding: 12px 40px; /* py-3 (12px), px-10 (40px) */
+  border-radius: 9999px; /* rounded-full */
+  font-size: 16px; /* text-md approx */
+  font-weight: 300; /* font-light */
+  margin-top: 24px; /* mt-6 */
+  transition: opacity 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.9;
+}

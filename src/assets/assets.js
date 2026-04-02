@@ -17,6 +17,7 @@ import p5 from "./p5.png";
 import p6 from "./p6.png";
 import promo from "./promo.png";
 import promocard from "./promo card.png";
+import Offer1 from "./O1.png";
 
 export const assets = {
     logo,
@@ -25,6 +26,7 @@ export const assets = {
     chair,
     box1, box2, box3, box4,
     p1, p2, p3, p4, p5, p6,
-    promo, promocard
+    promo, promocard,
+    Offer1
 
 }
