@@ -9,6 +9,7 @@ import Features2 from '../sections/Features2'
 import OfferBanners from '../sections/OfferBanners'
 import Banners3 from '../sections/Banners3'
 import { assets } from '../assets/assets'
+import Testimonial from '../sections/Testimonial'
 
 const Home = () => {
   return (
@@ -62,6 +63,7 @@ const Home = () => {
 
       <OfferBanners />
       <Banners3 />
+      <Testimonial/>
     </>
   )
 }

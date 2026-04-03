@@ -10,24 +10,24 @@ const Banners3 = () => {
         <div className="grid md:grid-cols-2 gap-6">
 
           {/* 🔷 LEFT BIG CARD */}
-          <div className="bg-[#f2f2f2] rounded-2xl p-6 flex flex-col justify-between min-h-[320px] md:min-h-[420px]">
+          <div className="bg-[#f2f2f2] rounded-2xl p-6 flex flex-col justify-between items-center min-h-[320px] md:min-h-[420px]">
 
             <img 
-              src={assets.Offer1} 
+              src={assets.Offer2} 
               alt="" 
               className="w-[160px] md:w-[220px] object-contain"
             />
 
-            <div className="mt-4">
-              <h3 className="text-2xl md:text-3xl font-medium text-dark">
-                Get 30% Off Your First Order
+            <div className="mt-4 text-center">
+              <h3 className="text-2xl md:text-4xl font-medium text-dark ">
+                Get 30% Off Your <br/>First Order
               </h3>
               <p className="text-[#5E5E5E] mt-2">
                 Exclusive welcome discount for new customers.
               </p>
             </div>
 
-            <button className="button mt-6 self-start">
+            <button className="button mt-6 ">
               Unlock My Discount
             </button>
           </div>
@@ -40,10 +40,10 @@ const Banners3 = () => {
 
               <div>
                 <h3 className="text-xl md:text-2xl font-medium text-dark">
-                  Coffee Table
+                  Serenity <br/>Side Table
                 </h3>
                 <p className="text-[#5E5E5E] mt-2 text-sm">
-                  20 inches diameter Height 18 inches
+                  Made of Pure Berrywood
                 </p>
 
                 <button className="button mt-4">
@@ -52,7 +52,7 @@ const Banners3 = () => {
               </div>
 
               <img 
-                src={assets.Offer1} 
+                src={assets.Offer3} 
                 alt="" 
                 className="w-[120px] md:w-[160px] object-contain"
               />
@@ -63,10 +63,10 @@ const Banners3 = () => {
 
               <div>
                 <h3 className="text-xl md:text-2xl font-medium text-dark">
-                  Coffee Table
+                  Round Resin <br/>Coffee Table
                 </h3>
                 <p className="text-[#5E5E5E] mt-2 text-sm">
-                  20 inches diameter Height 18 inches
+                  20 inches diameter Height 18 inches
                 </p>
 
                 <button className="button mt-4">
@@ -75,7 +75,7 @@ const Banners3 = () => {
               </div>
 
               <img 
-                src={assets.Offer1} 
+                src={assets.Offer4} 
                 alt="" 
                 className="w-[120px] md:w-[160px] object-contain"
               />
