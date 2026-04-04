@@ -24,6 +24,10 @@ import Offer4 from "./O4.png";
 import T1 from "./T1.png";
 import T2 from "./T2.png";
 import T3 from "./T3.png";
+import Person1 from "./Person-1.png";
+import Person2 from "./Person-2.png";
+import Person3 from "./Person-3.png";
+import cards from "./cards.png";
 export const assets = {
     logo,
     hero,
@@ -33,6 +37,8 @@ export const assets = {
     p1, p2, p3, p4, p5, p6,
     promo, promocard,
     Offer1, Offer2 , Offer3, Offer4,
-    T1, T2, T3
+    T1, T2, T3,
+    Person1, Person2, Person3,
+    cards
 
 }

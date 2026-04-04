@@ -9,23 +9,23 @@ const Testimonial = ({ forceCarousel = false }) => {
       designation: "CEO, Company A",
       feedback: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.",
       bannerImg: assets.T1,
-      personImg: assets.p1,
+      personImg: assets.Person1,
       star: 5
     },
     {
       name: "John Doe",
-      designation: "CEO, Company A",
+      designation: "Sales Manager, Company B",
       feedback: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.",
       bannerImg: assets.T2,
-      personImg: assets.p1,
+      personImg: assets.Person2,
       star: 5
     },
     {
       name: "John Doe",
-      designation: "CEO, Company A",
+      designation: "Founder, Company C",
       feedback: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.",
       bannerImg: assets.T3,
-      personImg: assets.p1,
+      personImg: assets.Person3,
       star: 5
     }
   ]
@@ -107,7 +107,7 @@ const Testimonial = ({ forceCarousel = false }) => {
 
         {/* 🔷 CAROUSEL (mobile OR forced) */}
         <div className={`${forceCarousel ? "block" : "md:hidden"} overflow-hidden`}>
-
+        <h2 className='text-3xl font-medium text-gray text-center mb-3'>What Our Customers Says <br/>About Us</h2>
           <div
             className="flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${current * 100}%)` }}
