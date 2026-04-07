@@ -28,10 +28,10 @@ const Navbar = () => {
 
           {/* MENU (Desktop) */}
           <ul className="hidden md:flex items-center gap-8 text-white text-sm font-medium">
-            <li className="hover:text-orange-400 cursor-pointer">Home</li>
-            <li className="hover:text-orange-400 cursor-pointer">About</li>
-            <li className="hover:text-orange-400 cursor-pointer">Shop</li>
-            <li className="hover:text-orange-400 cursor-pointer">Contact</li>
+           <a href="/"><li className="hover:text-orange-400 cursor-pointer">Home</li></a>
+            <a href="/about"><li className="hover:text-orange-400 cursor-pointer">About</li></a>
+            <a href="/shop"><li className="hover:text-orange-400 cursor-pointer">Shop</li></a>
+            <a href="/contact"><li className="hover:text-orange-400 cursor-pointer">Contact</li></a>
           </ul>
 
           {/* RIGHT SIDE */}
@@ -75,10 +75,10 @@ const Navbar = () => {
       {isOpen && (
         <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[90%] bg-[#2f3440] text-white rounded-xl p-6 md:hidden z-40">
           <ul className="flex flex-col gap-4 text-sm">
-            <li>Home</li>
-            <li>About</li>
-            <li>Shop</li>
-            <li>Contact</li>
+            <a href="/"><li className="hover:text-orange-400 cursor-pointer">Home</li></a>
+            <a href="/about"><li className="hover:text-orange-400 cursor-pointer">About</li></a>
+            <a href="/shop"><li className="hover:text-orange-400 cursor-pointer">Shop</li></a>
+            <a href="/contact"><li className="hover:text-orange-400 cursor-pointer">Contact</li></a>
           </ul>
         </div>
       )}
