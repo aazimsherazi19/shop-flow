@@ -1,15 +1,15 @@
 import React from 'react'
-import Hero from '../sections/Hero'
-import Features from '../sections/Features'
-import Text from '../sections/Text'
-import FeatureBoxes from '../sections/FeatureBoxes'
-import FeaturedProducts from '../sections/FeaturedProducts'
-import PromoBanner from '../sections/PromoBanner'
-import Features2 from '../sections/Features2'
-import OfferBanners from '../sections/OfferBanners'
-import Banners3 from '../sections/Banners3'
+import Hero from '../features/home/Hero'
+import Features from '../features/home/Features'
+import Text from '../features/home/Text'
+import FeatureBoxes from '../features/home/FeatureBoxes'
+import FeaturedProducts from '../features/home/FeaturedProducts'
+import PromoBanner from '../features/home/PromoBanner'
+import Features2 from '../features/home/Features2'
+import OfferBanners from '../features/home/OfferBanners'
+import Banners3 from '../features/home/Banners3'
+import Testimonial from '../features/home/Testimonial'
 import { assets } from '../assets/assets'
-import Testimonial from '../sections/Testimonial'
 
 const Home = () => {
   return (
@@ -63,7 +63,7 @@ const Home = () => {
 
       <OfferBanners />
       <Banners3 />
-      <Testimonial/>
+      <Testimonial />
     </>
   )
 }

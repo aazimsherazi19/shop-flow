@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -6,10 +6,13 @@ import {
   faCartShopping,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import {assets} from "../../assets/assets.js";
+import { assets } from "../../assets/assets.js";
+import { Link } from "react-router-dom";
+import { ShopContext } from "../../context/ShopContext.jsx";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { getCartItemsCount } = useContext(ShopContext);
 
   return (
     <>
@@ -18,20 +21,20 @@ const Navbar = () => {
         <div className="flex items-center justify-between bg-[#2f3440]/90 backdrop-blur-md px-6 py-3 rounded-full shadow-lg">
 
           {/* LOGO */}
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src={assets.logo}
               alt="logo"
               className="w-[90px] h-[40px] object-contain"
             />
-          </div>
+          </Link>
 
           {/* MENU (Desktop) */}
           <ul className="hidden md:flex items-center gap-8 text-white text-sm font-medium">
-           <a href="/"><li className="hover:text-orange-400 cursor-pointer">Home</li></a>
-            <a href="/about"><li className="hover:text-orange-400 cursor-pointer">About</li></a>
-            <a href="/shop"><li className="hover:text-orange-400 cursor-pointer">Shop</li></a>
-            <a href="/contact"><li className="hover:text-orange-400 cursor-pointer">Contact</li></a>
+            <Link to="/"><li className="hover:text-orange-400 cursor-pointer">Home</li></Link>
+            <Link to="/about"><li className="hover:text-orange-400 cursor-pointer">About</li></Link>
+            <Link to="/shop"><li className="hover:text-orange-400 cursor-pointer">Shop</li></Link>
+            <Link to="/contact"><li className="hover:text-orange-400 cursor-pointer">Contact</li></Link>
           </ul>
 
           {/* RIGHT SIDE */}
@@ -43,26 +46,28 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="outline-none text-sm px-1"
+                className="outline-none text-sm px-1 text-black"
               />
-              <select className="text-sm outline-none ml-2">
+              <select className="text-sm outline-none ml-2 text-black">
                 <option>All</option>
-                <option>Chair</option>
-                <option>Table</option>
+                <option>Decor</option>
+                <option>Clocks</option>
               </select>
             </div>
 
             {/* CART */}
-            <div className="relative text-white cursor-pointer">
-              <FontAwesomeIcon icon={faCartShopping} />
-              <span className="absolute -top-2 -right-2 bg-orange-500 text-xs px-1 rounded-full">
-                2
-              </span>
-            </div>
+            <Link to="/cart">
+              <div className="relative text-white cursor-pointer">
+                <FontAwesomeIcon icon={faCartShopping} />
+                <span className="absolute -top-2 -right-2 bg-orange-500 text-xs px-1 rounded-full">
+                  {getCartItemsCount()}
+                </span>
+              </div>
+            </Link>
 
             {/* HAMBURGER */}
             <button
-              className="md:hidden text-white"
+              className="md:hidden text-white cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
             >
               <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
@@ -75,10 +80,10 @@ const Navbar = () => {
       {isOpen && (
         <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[90%] bg-[#2f3440] text-white rounded-xl p-6 md:hidden z-40">
           <ul className="flex flex-col gap-4 text-sm">
-            <a href="/"><li className="hover:text-orange-400 cursor-pointer">Home</li></a>
-            <a href="/about"><li className="hover:text-orange-400 cursor-pointer">About</li></a>
-            <a href="/shop"><li className="hover:text-orange-400 cursor-pointer">Shop</li></a>
-            <a href="/contact"><li className="hover:text-orange-400 cursor-pointer">Contact</li></a>
+            <Link to="/" onClick={() => setIsOpen(false)}><li className="hover:text-orange-400 cursor-pointer">Home</li></Link>
+            <Link to="/about" onClick={() => setIsOpen(false)}><li className="hover:text-orange-400 cursor-pointer">About</li></Link>
+            <Link to="/shop" onClick={() => setIsOpen(false)}><li className="hover:text-orange-400 cursor-pointer">Shop</li></Link>
+            <Link to="/contact" onClick={() => setIsOpen(false)}><li className="hover:text-orange-400 cursor-pointer">Contact</li></Link>
           </ul>
         </div>
       )}

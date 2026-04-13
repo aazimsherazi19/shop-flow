@@ -6,7 +6,7 @@ import {
   faWhatsapp,
   faTelegram,
 } from "@fortawesome/free-brands-svg-icons";
-import { assets } from "../assets/assets";
+import { assets } from "../../assets/assets";
 
 const Footer = () => {
   return (

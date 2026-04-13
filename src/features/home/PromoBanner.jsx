@@ -1,4 +1,4 @@
-import { assets } from "../assets/assets";
+import { assets } from "../../assets/assets";
 import SectionText from "./Text";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
