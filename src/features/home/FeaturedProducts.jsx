@@ -5,7 +5,17 @@ import { ShopContext } from '../../context/ShopContext';
 import { Link } from 'react-router-dom';
 
 const FeaturedProducts = () => {
-  const { products } = useContext(ShopContext);
+  const { products, loading, error } = useContext(ShopContext);
+
+  if (loading) {
+    return (
+      <section className="py-16 px-4 md:px-10 bg-[#f9f9f9] flex justify-center items-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+      </section>
+    );
+  }
+
+  if (error) return null;
 
   // Take the first 6 products as featured
   const featuredProducts = products.slice(0, 6);

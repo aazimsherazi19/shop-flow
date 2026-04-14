@@ -1,13 +1,21 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { ShopContext } from '../context/ShopContext';
-import { categories } from '../data/products';
 import ProductCard from '../components/product/ProductCard';
 import SectionTitle from '../components/ui/SectionTitle';
 
 const Shop = () => {
-  const { products } = useContext(ShopContext);
+  const { products, loading, error } = useContext(ShopContext);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortType, setSortType] = useState("default");
+
+  const categories = useMemo(() => {
+    if (!products) return ["All"];
+    const cats = new Set(["All"]);
+    products.forEach(p => {
+       if (p.category) cats.add(p.category);
+    });
+    return Array.from(cats);
+  }, [products]);
 
   // Filtering and Sorting logic
   const filteredProducts = useMemo(() => {
@@ -25,6 +33,22 @@ const Shop = () => {
 
     return result;
   }, [products, selectedCategory, sortType]);
+
+  if (loading) {
+    return (
+      <div className="pt-32 pb-16 px-4 md:px-10 bg-[#f9f9f9] min-h-screen flex items-center justify-center">
+        <div className="text-xl font-medium text-gray-600">Loading products...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="pt-32 pb-16 px-4 md:px-10 bg-[#f9f9f9] min-h-screen flex items-center justify-center">
+        <div className="text-xl font-medium text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 pb-16 px-4 md:px-10 bg-[#f9f9f9] min-h-screen">

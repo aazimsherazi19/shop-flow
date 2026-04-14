@@ -3,29 +3,51 @@ import { useParams, Link } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faMinus, faPlus, faCartShopping, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { getProductById } from '../services/api';
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { products, addToCart } = useContext(ShopContext);
+  const { addToCart, addProductToContext } = useContext(ShopContext);
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
 
   useEffect(() => {
-    const foundProduct = products.find(p => p.id === Number(id));
-    if (foundProduct) {
-      setProduct(foundProduct);
-      setMainImage(foundProduct.images ? foundProduct.images[0] : foundProduct.image);
-    }
-  }, [id, products]);
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const fetchedItem = await getProductById(id);
+        setProduct(fetchedItem);
+        setMainImage(fetchedItem.image || (fetchedItem.images && fetchedItem.images[0]) || "");
+        addProductToContext(fetchedItem);
+        setError(null);
+      } catch (err) {
+        setError("Product not found or failed to load");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
-  if (!product) {
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center pt-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mb-4"></div>
+        <div className="text-gray-500 font-medium cursor-default">Loading product details...</div>
+      </div>
+    );
+  }
+
+  if (error || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
-          <Link to="/shop" className="text-orange-500 hover:underline">Back to Shop</Link>
+          <h2 className="text-2xl font-bold mb-4 text-red-500">{error || "Product Not Found"}</h2>
+          <Link to="/shop" className="text-orange-500 hover:text-orange-600 font-medium hover:underline">Back to Shop</Link>
         </div>
       </div>
     );

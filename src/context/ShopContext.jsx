@@ -1,19 +1,41 @@
 import { createContext, useState, useEffect } from "react";
-import { products as dummyProducts } from "../data/products";
+import { getProducts } from "../services/api";
 
 export const ShopContext = createContext(null);
 
 const getDefaultCart = () => {
-  let cart = {};
-  for (let i = 1; i < 300; i++) {
-    cart[i] = 0;
-  }
-  return cart;
+  return {};
 };
 
 export const ShopContextProvider = (props) => {
-  const [products, setProducts] = useState(dummyProducts);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [cartItems, setCartItems] = useState(getDefaultCart());
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const data = await getProducts();
+        setProducts(data);
+        setError(null);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch products');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const addProductToContext = (newProduct) => {
+    setProducts((prev) => {
+      if (prev.some(p => p.id === newProduct.id)) return prev;
+      return [...prev, newProduct];
+    });
+  };
 
   const getCartItemsCount = () => {
     let totalItemCount = 0;
@@ -39,7 +61,7 @@ export const ShopContextProvider = (props) => {
   };
 
   const addToCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
   };
 
   const removeFromCart = (itemId) => {
@@ -53,7 +75,11 @@ export const ShopContextProvider = (props) => {
   };
 
   const deleteFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      delete updated[itemId];
+      return updated;
+    });
   }
 
   const clearCart = () => {
@@ -62,6 +88,8 @@ export const ShopContextProvider = (props) => {
 
   const contextValue = {
     products,
+    loading,
+    error,
     cartItems,
     addToCart,
     removeFromCart,
@@ -70,6 +98,7 @@ export const ShopContextProvider = (props) => {
     getCartTotalAmount,
     getCartItemsCount,
     clearCart,
+    addProductToContext,
   };
 
   return (
