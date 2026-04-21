@@ -1,30 +1,46 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { ShopContext } from '../context/ShopContext';
+import { categories } from '../data/products';
 import ProductCard from '../components/product/ProductCard';
 import SectionTitle from '../components/ui/SectionTitle';
+import { useLocation } from "react-router-dom";
+
 
 const Shop = () => {
-  const { products, loading, error } = useContext(ShopContext);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const { products } = useContext(ShopContext);
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const searchQuery = params.get("search") || "";
+  const categoryQuery = params.get("category");
+
+  const [selectedCategory, setSelectedCategory] = useState(categoryQuery || "All");
   const [sortType, setSortType] = useState("default");
 
-  const categories = useMemo(() => {
-    if (!products) return ["All"];
-    const cats = new Set(["All"]);
-    products.forEach(p => {
-       if (p.category) cats.add(p.category);
-    });
-    return Array.from(cats);
-  }, [products]);
+  // Sync category if URL category changes
+  useEffect(() => {
+    if (categoryQuery) {
+      setSelectedCategory(categoryQuery);
+    }
+  }, [categoryQuery]);
 
   // Filtering and Sorting logic
   const filteredProducts = useMemo(() => {
     let result = products;
 
+    // 1. Search Query Filter
+    if (searchQuery) {
+      const lowercasedQuery = searchQuery.toLowerCase();
+      result = result.filter(item => 
+        (item.name || '').toLowerCase().includes(lowercasedQuery)
+      );
+    }
+
+    // 2. Category Filter
     if (selectedCategory !== "All") {
       result = result.filter(item => item.category === selectedCategory);
     }
 
+    // 3. Sorting
     if (sortType === "price-asc") {
       result = [...result].sort((a, b) => a.price - b.price);
     } else if (sortType === "price-desc") {
@@ -32,23 +48,7 @@ const Shop = () => {
     }
 
     return result;
-  }, [products, selectedCategory, sortType]);
-
-  if (loading) {
-    return (
-      <div className="pt-32 pb-16 px-4 md:px-10 bg-[#f9f9f9] min-h-screen flex items-center justify-center">
-        <div className="text-xl font-medium text-gray-600">Loading products...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="pt-32 pb-16 px-4 md:px-10 bg-[#f9f9f9] min-h-screen flex items-center justify-center">
-        <div className="text-xl font-medium text-red-500">Error: {error}</div>
-      </div>
-    );
-  }
+  }, [products, selectedCategory, sortType, searchQuery]);
 
   return (
     <div className="pt-32 pb-16 px-4 md:px-10 bg-[#f9f9f9] min-h-screen">

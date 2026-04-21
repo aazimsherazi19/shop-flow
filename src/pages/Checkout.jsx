@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SectionTitle from '../components/ui/SectionTitle';
+import { createOrder } from '../services/api';
 
 const Checkout = () => {
   const { products, cartItems, getCartTotalAmount, clearCart } = useContext(ShopContext);
@@ -12,18 +13,64 @@ const Checkout = () => {
     firstName: '', lastName: '', email: '', phone: '',
     address: '', city: '', state: '', zip: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
   }
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    // Simulate placing order
-    setTimeout(() => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const line_items = [];
+      products.forEach((product) => {
+        if (cartItems[product.id] > 0) {
+          line_items.push({
+            product_id: product.id,
+            quantity: cartItems[product.id]
+          });
+        }
+      });
+
+      const orderData = {
+        payment_method: 'cod',
+        payment_method_title: 'Cash on Delivery',
+        set_paid: false,
+        billing: {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          address_1: formData.address,
+          city: formData.city,
+          state: formData.state,
+          postcode: formData.zip,
+          country: '',
+          email: formData.email,
+          phone: formData.phone
+        },
+        shipping: {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          address_1: formData.address,
+          city: formData.city,
+          state: formData.state,
+          postcode: formData.zip,
+          country: ''
+        },
+        line_items: line_items
+      };
+
+      await createOrder(orderData);
       clearCart();
-      navigate('/success');
-    }, 1000);
+      navigate('/order-success');
+    } catch (err) {
+      setError(err.message || 'Failed to create order. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   // Redirect if cart is empty
@@ -136,12 +183,14 @@ const Checkout = () => {
                  <p className="text-xs text-gray-500 ml-5">Pay with cash upon delivery.</p>
               </div>
 
+              {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               <button 
                 type="submit" 
                 form="checkout-form"
-                className="w-full bg-orange-500 text-white py-4 rounded-full hover:bg-orange-600 transition font-medium text-lg uppercase tracking-wide"
+                disabled={loading}
+                className={`w-full bg-orange-500 text-white py-4 rounded-full hover:bg-orange-600 transition font-medium text-lg uppercase tracking-wide ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                Place Order
+                {loading ? 'Processing...' : 'Place Order'}
               </button>
             </div>
           </div>

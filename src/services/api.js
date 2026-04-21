@@ -32,6 +32,20 @@ const oauthGet = async (endpoint, queryParams = {}) => {
   });
 };
 
+// Helper for POST requests
+const oauthPost = async (endpoint, data = {}) => {
+  const requestData = {
+    url: `${WOO_API_URL}/wp-json/wc/v3${endpoint}`,
+    method: 'POST',
+  };
+
+  const authData = oauth.authorize({ ...requestData, data: undefined });
+
+  return await axios.post(requestData.url, data, {
+    params: authData
+  });
+};
+
 // Helper to strip HTML tags since WooCommerce returns HTML strings
 const stripHtml = (html) => {
   if (!html) return '';
@@ -41,7 +55,7 @@ const stripHtml = (html) => {
 
 // Mapper to transform WooCommerce item to frontend-friendly format
 export const mapProduct = (wooProduct) => {
-  const images = wooProduct.images?.length > 0 
+  const images = wooProduct.images?.length > 0
     ? wooProduct.images.slice(0, 4).map(img => img.src)
     : ["https://placehold.co/600x600?text=No+Image"];
 
@@ -71,13 +85,13 @@ export const getProducts = async () => {
     const response = await oauthGet('/products', {
       per_page: 20
     });
-    
+
     console.log("WooCommerce /products response:", response.data);
-    
+
     if (!Array.isArray(response.data)) {
       throw new Error(`API returned ${typeof response.data} instead of an array. Check console for payload. Ensure your API URL is correct and handles HTTPS/auth.`);
     }
-    
+
     return response.data.map(mapProduct);
   } catch (error) {
     console.error("Error fetching WooCommerce products:", error.response?.data || error.message);
@@ -88,9 +102,9 @@ export const getProducts = async () => {
 export const getProductById = async (id) => {
   try {
     const response = await oauthGet(`/products/${id}`);
-    
+
     console.log(`WooCommerce /products/${id} response:`, response.data);
-    
+
     return mapProduct(response.data);
   } catch (error) {
     console.error(`Error fetching WooCommerce product ${id}:`, error.response?.data || error.message);
@@ -99,3 +113,13 @@ export const getProductById = async (id) => {
 };
 
 
+export const createOrder = async (orderData) => {
+  try {
+    const response = await oauthPost('/orders', orderData);
+    console.log('WooCommerce /orders response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating WooCommerce order:', error.response?.data || error.message);
+    throw error;
+  }
+};

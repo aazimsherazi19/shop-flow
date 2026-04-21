@@ -9,10 +9,36 @@ import {
 import { assets } from "../../assets/assets.js";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../../context/ShopContext.jsx";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { getCartItemsCount } = useContext(ShopContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isFocused, setIsFocused] = useState(false);
+  
+  const params = new URLSearchParams(location.search);
+  const currentSearch = params.get("search") || "";
+  const currentCategory = params.get("category") || "All";
+
+  const [searchTerm, setSearchTerm] = useState(currentSearch);
+  const [category, setCategory] = useState(currentCategory);
+
+  useEffect(() => {
+    setSearchTerm(currentSearch);
+    setCategory(currentCategory);
+  }, [location.search]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(searchTerm)}&category=${category}`);
+    } else {
+      navigate(`/shop?category=${category}`);
+    }
+  };
 
   return (
     <>
@@ -41,19 +67,31 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
 
             {/* SEARCH BAR (Desktop only) */}
-            <div className="hidden lg:flex items-center bg-white rounded-full px-3 py-1">
-              <FontAwesomeIcon icon={faSearch} className="text-gray-500 mr-2" />
+            <form 
+              onSubmit={handleSearch}
+              className={`hidden lg:flex items-center bg-white rounded-full px-4 py-1.5 border-2 transition-all duration-300 w-[300px] xl:w-[380px] ${isFocused ? 'border-primary shadow-[0_0_10px_rgba(255,165,0,0.3)]' : 'border-transparent'}`}
+            >
+              <FontAwesomeIcon icon={faSearch} className={`mr-2 transition-colors duration-300 ${isFocused ? 'text-primary' : 'text-gray-400'}`} />
               <input
                 type="text"
                 placeholder="Search products..."
-                className="outline-none text-sm px-1 text-black"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                className="outline-none text-sm px-1 text-black bg-transparent flex-1 w-full placeholder-gray-400"
               />
-              <select className="text-sm outline-none ml-2 text-black">
-                <option>All</option>
-                <option>Decor</option>
-                <option>Clocks</option>
+              <div className="w-[1px] h-5 bg-gray-300 mx-2"></div>
+              <select 
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="text-sm outline-none bg-transparent text-gray-600 cursor-pointer font-medium"
+              >
+                <option value="All">All</option>
+                <option value="Decor">Decor</option>
+                <option value="Clocks">Clocks</option>
               </select>
-            </div>
+            </form>
 
             {/* CART */}
             <Link to="/cart">

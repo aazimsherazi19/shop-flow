@@ -1,4 +1,5 @@
 import { assets } from "../../assets/assets";
+import { Link } from "react-router-dom"
 
 const Hero = () => {
   return (
@@ -24,9 +25,9 @@ const Hero = () => {
           </p>
 
           <div className="flex gap-4 mt-6 flex-wrap">
-            <button className="bg-orange-500 px-6 py-3 rounded-full hover:bg-orange-600 w-[180px] transition">
+            <Link to={"/shop"}><button className="bg-orange-500 px-6 py-3 rounded-full hover:bg-orange-600 w-[180px] transition">
               Shop Now
-            </button>
+            </button></Link>
 
             <button className="border px-6 py-3 rounded-full hover:bg-white hover:text-black w-[180px] transition">
               Explore

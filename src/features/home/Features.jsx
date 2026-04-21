@@ -5,7 +5,7 @@ import { assets } from '../../assets/assets.js'
 
 const Features = ({ boxes }) => {
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 px-4 py-8 sm:px-12 py-10 md:px-16 md:py-12 lg:px-20 lg: py-14'>
+    <div className='grid grid-cols-2 xl:grid-cols-4 gap-6 px-4 py-8 sm:px-12 py-10 md:px-16 md:py-12 lg:px-20 lg: py-14'>
       {boxes.map((box, index)=> (
        <div key={index} className='px-2 py-4 flex items-center gap-4 justify-center'>
              {/* Logo */}
