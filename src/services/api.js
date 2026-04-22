@@ -14,17 +14,22 @@ const oauth = new OAuth({
   },
 });
 
+const IS_DEV = import.meta.env.DEV;
+
 // Use this helper instead of raw axios to cleanly force correct signatures on HTTP
 const oauthGet = async (endpoint, queryParams = {}) => {
+  const signatureUrl = `${WOO_API_URL}/wp-json/wc/v3${endpoint}`;
+  const actualUrl = IS_DEV ? `/wp-json/wc/v3${endpoint}` : signatureUrl;
+
   const requestData = {
-    url: `${WOO_API_URL}/wp-json/wc/v3${endpoint}`,
+    url: signatureUrl,
     method: 'GET',
     data: queryParams
   };
 
   const authData = oauth.authorize(requestData);
 
-  return await axios.get(requestData.url, {
+  return await axios.get(actualUrl, {
     params: {
       ...queryParams,
       ...authData
@@ -34,14 +39,17 @@ const oauthGet = async (endpoint, queryParams = {}) => {
 
 // Helper for POST requests
 const oauthPost = async (endpoint, data = {}) => {
+  const signatureUrl = `${WOO_API_URL}/wp-json/wc/v3${endpoint}`;
+  const actualUrl = IS_DEV ? `/wp-json/wc/v3${endpoint}` : signatureUrl;
+
   const requestData = {
-    url: `${WOO_API_URL}/wp-json/wc/v3${endpoint}`,
+    url: signatureUrl,
     method: 'POST',
   };
 
   const authData = oauth.authorize({ ...requestData, data: undefined });
 
-  return await axios.post(requestData.url, data, {
+  return await axios.post(actualUrl, data, {
     params: authData
   });
 };
